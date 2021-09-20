@@ -1,4 +1,4 @@
-package ru.d3rvich.pizzaapp
+package ru.d3rvich.pizzaapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
