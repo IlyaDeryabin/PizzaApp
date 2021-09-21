@@ -8,5 +8,5 @@ import ru.d3rvich.pizzaapp.domain.entity.PizzaEntity
 interface PizzaInteractor {
     fun getPizzaList(): Flow<Resource<List<PizzaEntity>>>
 
-    fun getPizzaDetail(): Flow<Resource<PizzaDetailEntity>>
+    fun getPizzaDetailBy(id: String): Flow<Resource<PizzaDetailEntity>>
 }
