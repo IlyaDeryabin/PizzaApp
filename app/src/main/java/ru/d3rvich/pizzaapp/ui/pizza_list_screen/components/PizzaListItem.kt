@@ -83,7 +83,7 @@ fun PizzaListItemPreview() {
     PizzaAppTheme {
         val pizzaEntity = PizzaUIModel(
             0,
-            "4 сыра",
+            "Четыре сыра",
             "300",
             "100",
             R.drawable.four_cheeses
