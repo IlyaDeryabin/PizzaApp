@@ -1,75 +1,87 @@
 package ru.d3rvich.pizzaapp.ui.pizza_list_screen.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.d3rvich.pizzaapp.R
 import ru.d3rvich.pizzaapp.ui.model.PizzaUIModel
 import ru.d3rvich.pizzaapp.ui.theme.PizzaAppTheme
 
+@ExperimentalMaterialApi
 @Composable
-fun PizzaListItem(pizzaList: PizzaUIModel, onItemClick: () -> Unit) {
+fun PizzaListItem(pizzaItem: PizzaUIModel, onItemClick: () -> Unit) {
     Box(
         Modifier
             .padding(horizontal = 8.dp)
-            .padding(top = 8.dp)) {
+            .padding(top = 8.dp)
+    ) {
         Card(
+            shape = RoundedCornerShape(24.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
-                .clickable { onItemClick() },
-            shape = RoundedCornerShape(24.dp)
+                .height(250.dp),
+            onClick = { onItemClick() },
+            backgroundColor = Color.LightGray
         ) {
             Box(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(12.dp)
             ) {
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(id = pizzaList.photoResourceId),
-                    contentDescription = pizzaList.name,
-                    contentScale = ContentScale.FillBounds
-                )
+                Card(
+                    modifier = Modifier.height(150.dp),
+                    shape = RoundedCornerShape(24.dp)
+                ) {
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        painter = painterResource(id = pizzaItem.photoResourceId),
+                        contentDescription = pizzaItem.name,
+                        contentScale = ContentScale.FillBounds
+                    )
+                }
                 Column(
                     modifier = Modifier
-                        .background(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Transparent,
-                                    Color.Black
-                                )
-                            )
-                        )
                         .align(Alignment.BottomCenter)
-                        .padding(horizontal = 20.dp)
-                        .padding(top = 40.dp, bottom = 12.dp)
-                        .fillMaxWidth()
+                        .height(100.dp)
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Bottom
                 ) {
                     Text(
-                        text = pizzaList.name,
-                        style = MaterialTheme.typography.h5,
-                        color = Color.White
+                        text = pizzaItem.name,
+                        style = MaterialTheme.typography.h6,
+                        color = Color.Black,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(text = "${pizzaList.weight} г", color = Color.White)
-                        Text(text = "${pizzaList.price} руб", color = Color.White)
+                        Text(
+                            text = "${pizzaItem.weight} г",
+                            color = Color.Black,
+                            style = MaterialTheme.typography.body2
+                        )
+                        Text(
+                            text = "${pizzaItem.price} руб",
+                            color = Color.Black,
+                            style = MaterialTheme.typography.body2
+                        )
                     }
                 }
             }
@@ -77,6 +89,7 @@ fun PizzaListItem(pizzaList: PizzaUIModel, onItemClick: () -> Unit) {
     }
 }
 
+@ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable
 fun PizzaListItemPreview() {
@@ -88,6 +101,6 @@ fun PizzaListItemPreview() {
             "100",
             R.drawable.four_cheeses
         )
-        PizzaListItem(pizzaList = pizzaEntity, onItemClick = {})
+        PizzaListItem(pizzaItem = pizzaEntity, onItemClick = {})
     }
 }

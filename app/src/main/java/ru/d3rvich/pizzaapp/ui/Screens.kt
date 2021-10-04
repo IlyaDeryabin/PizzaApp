@@ -1,7 +1,7 @@
 package ru.d3rvich.pizzaapp.ui
 
 sealed class Screens(val route: String) {
-    class PizzaListScreen: Screens("pizza_list")
-    class PizzaDetailScreen: Screens("pizza_detail")
-    class OrderScreen: Screens("order")
+    object PizzaListScreen: Screens("pizza_list")
+    object PizzaDetailScreen: Screens("pizza_detail")
+    object OrderScreen: Screens("order")
 }

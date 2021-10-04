@@ -4,7 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -15,11 +14,9 @@ import ru.d3rvich.pizzaapp.ui.mappers.toPizzaUIModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PizzaListViewModel(private val navController: NavController) :
-    ViewModel() {
-
-    @Inject
-    private val interactor: PizzaInteractor? = null
+class PizzaListViewModel @Inject constructor(
+    private val interactor: PizzaInteractor
+) : ViewModel() {
 
     private val _uiState = mutableStateOf<PizzaListState>(PizzaListState.Idle)
     val uiState: State<PizzaListState>
@@ -27,7 +24,7 @@ class PizzaListViewModel(private val navController: NavController) :
 
     init {
         viewModelScope.launch {
-            interactor?.getPizzaList()?.collect { resource ->
+            interactor.getPizzaList().collect { resource ->
                 when (resource) {
                     is Resource.Loading -> {
                         _uiState.value = PizzaListState.Loading
@@ -42,7 +39,7 @@ class PizzaListViewModel(private val navController: NavController) :
                         _uiState.value = PizzaListState.Error("")
                     }
                 }
-            } ?: error("Interactor can't be null!")
+            }
         }
     }
 }

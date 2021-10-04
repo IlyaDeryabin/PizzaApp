@@ -1,19 +1,23 @@
 package ru.d3rvich.pizzaapp.ui.pizza_list_screen
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import ru.d3rvich.pizzaapp.R
 import ru.d3rvich.pizzaapp.ui.model.PizzaUIModel
 import ru.d3rvich.pizzaapp.ui.pizza_list_screen.components.PizzaListItem
 
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 @Composable
 fun PizzaListScreen(viewModel: PizzaListViewModel) {
     when (val state = viewModel.uiState.value) {
@@ -38,12 +42,17 @@ fun Loading() {
     }
 }
 
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 @Composable
 fun PizzaList(pizzaList: List<PizzaUIModel>) {
-    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+    LazyVerticalGrid(
+        cells = GridCells.Fixed(count = 2),
+        contentPadding = PaddingValues(bottom = 4.dp)
+    ) {
         pizzaList.forEach { pizzaUIModel ->
             item {
-                PizzaListItem(pizzaList = pizzaUIModel) {
+                PizzaListItem(pizzaItem = pizzaUIModel) { // onItemClick
                 }
             }
         }
@@ -57,10 +66,12 @@ fun Error(errorText: String) {
     }
 }
 
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 @Preview(showBackground = true)
 @Composable
 fun PizzaListPreview() {
-    val pizzaList = List(5) {
+    val pizzaList = List(10) {
         PizzaUIModel(
             0,
             "Четыре сыра",
