@@ -37,7 +37,7 @@ fun Content(pizza: PizzaDetailUIModel) {
         Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = pizza.id.toString())
+        Text(text = pizza.id)
     }
 }
 
@@ -45,7 +45,7 @@ fun Content(pizza: PizzaDetailUIModel) {
 @Composable
 fun PizzaDetailPreview() {
     PizzaAppTheme {
-        val pizza = PizzaDetailUIModel(0)
+        val pizza = PizzaDetailUIModel("1")
         Content(pizza = pizza)
     }
 }

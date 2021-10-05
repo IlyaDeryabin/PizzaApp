@@ -12,5 +12,5 @@ data class PizzaUIModel(
 
 // TODO: 05.10.2021 Добавить все необходимые поля
 data class PizzaDetailUIModel(
-    val id: Long
+    val id: String
 )
