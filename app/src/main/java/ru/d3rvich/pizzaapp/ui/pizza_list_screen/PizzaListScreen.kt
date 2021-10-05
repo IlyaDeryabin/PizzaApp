@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,8 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.d3rvich.pizzaapp.R
+import ru.d3rvich.pizzaapp.ui.common.TopAppBar
 import ru.d3rvich.pizzaapp.ui.model.PizzaUIModel
 import ru.d3rvich.pizzaapp.ui.pizza_list_screen.components.PizzaListItem
+import ru.d3rvich.pizzaapp.ui.theme.PizzaAppTheme
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -27,7 +30,9 @@ fun PizzaListScreen(viewModel: PizzaListViewModel) {
             Loading()
         }
         is PizzaListState.PizzaList -> {
-            PizzaList(pizzaList = state.pizzaList)
+            Scaffold(topBar = { TopAppBar(title = "PizzaApp", onProfilePressed = {}) }) {
+                PizzaList(pizzaList = state.pizzaList)
+            }
         }
         is PizzaListState.Error -> {
             Error(errorText = state.message)
@@ -80,5 +85,9 @@ fun PizzaListPreview() {
             R.drawable.four_cheeses
         )
     }
-    PizzaList(pizzaList = pizzaList)
+    PizzaAppTheme() {
+        Scaffold(topBar = { TopAppBar(title = "PizzaApp", onProfilePressed = {}) }) {
+            PizzaList(pizzaList = pizzaList)
+        }
+    }
 }
