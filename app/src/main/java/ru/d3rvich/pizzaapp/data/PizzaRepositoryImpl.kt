@@ -18,6 +18,11 @@ class PizzaRepositoryImpl: PizzaRepository {
     }
 
     override suspend fun getPizzaDetailBy(id: String): PizzaDetailEntity {
-        error("Not yet implemented")
+        return PizzaDetailEntity(
+            id = 0,
+            description = "",
+            composition = listOf(),
+            price = 0
+        )
     }
 }

@@ -4,16 +4,17 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import ru.d3rvich.pizzaapp.R
+import ru.d3rvich.pizzaapp.ui.Screens
+import ru.d3rvich.pizzaapp.ui.common.Loading
+import ru.d3rvich.pizzaapp.ui.common.Error
 import ru.d3rvich.pizzaapp.ui.common.TopAppBar
 import ru.d3rvich.pizzaapp.ui.model.PizzaUIModel
 import ru.d3rvich.pizzaapp.ui.pizza_list_screen.components.PizzaListItem
@@ -22,7 +23,7 @@ import ru.d3rvich.pizzaapp.ui.theme.PizzaAppTheme
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun PizzaListScreen(viewModel: PizzaListViewModel) {
+fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel = hiltViewModel()) {
     when (val state = viewModel.uiState.value) {
         is PizzaListState.Idle -> {
         }
@@ -31,7 +32,7 @@ fun PizzaListScreen(viewModel: PizzaListViewModel) {
         }
         is PizzaListState.PizzaList -> {
             Scaffold(topBar = { TopAppBar(title = "PizzaApp", onProfilePressed = {}) }) {
-                PizzaList(pizzaList = state.pizzaList)
+                PizzaList(pizzaList = state.pizzaList, navController)
             }
         }
         is PizzaListState.Error -> {
@@ -40,17 +41,10 @@ fun PizzaListScreen(viewModel: PizzaListViewModel) {
     }
 }
 
-@Composable
-fun Loading() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
-    }
-}
-
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun PizzaList(pizzaList: List<PizzaUIModel>) {
+fun PizzaList(pizzaList: List<PizzaUIModel>, navController: NavController? = null) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(count = 2),
         contentPadding = PaddingValues(bottom = 4.dp)
@@ -58,16 +52,11 @@ fun PizzaList(pizzaList: List<PizzaUIModel>) {
         pizzaList.forEach { pizzaUIModel ->
             item {
                 PizzaListItem(pizzaItem = pizzaUIModel) { // onItemClick
+                    navController
+                        ?.navigate(Screens.PizzaDetailScreen.route + "/${pizzaUIModel.id}")
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Error(errorText: String) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = errorText)
     }
 }
 
