@@ -44,12 +44,19 @@ fun TopAppBar(title: String, onBackPressed: () -> Unit, onProfilePressed: (() ->
     )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun HeaderPreview() {
     PizzaAppTheme {
-        Scaffold(topBar = { TopAppBar(title = "PizzaApp") }) {
-        }
+        TopAppBar(title = "PizzaApp")
+    }
+}
+
+@Preview
+@Composable
+fun HeaderPreviewWithProfile() {
+    PizzaAppTheme {
+        TopAppBar(title = "PizzaApp", onProfilePressed = {})
     }
 }
 
@@ -57,7 +64,14 @@ fun HeaderPreview() {
 @Composable
 fun AppBarWithButton() {
     PizzaAppTheme {
-        Scaffold(topBar = { TopAppBar(title = "PizzaApp", onBackPressed = {}) }) {
-        }
+        TopAppBar(title = "PizzaApp", onBackPressed = {})
+    }
+}
+
+@Preview
+@Composable
+fun AppBarWithButtonAndProfile() {
+    PizzaAppTheme {
+        TopAppBar(title = "PizzaApp", onBackPressed = {}, onProfilePressed = {})
     }
 }
