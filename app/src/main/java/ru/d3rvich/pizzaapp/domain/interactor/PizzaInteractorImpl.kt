@@ -41,10 +41,14 @@ class PizzaInteractorImpl @Inject constructor(
         }
     }
 
-    override fun getProfile(): Flow<Resource<ProfileEntity?>> = flow {
+    override fun getProfile(): Flow<Resource<ProfileEntity>> = flow {
         emit(Resource.Loading())
         val profile = profileService.getProfile()
-        emit(Resource.Success(profile))
+        if (profile !== null) {
+            emit(Resource.Success(profile))
+        } else {
+            emit(Resource.Error<ProfileEntity>("Profile doesn't created"))
+        }
     }
 
     override fun updateProfile(profile: ProfileEntity): Flow<Resource<Unit>> = flow {

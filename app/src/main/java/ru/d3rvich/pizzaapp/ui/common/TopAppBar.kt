@@ -44,6 +44,27 @@ fun TopAppBar(title: String, onBackPressed: () -> Unit, onProfilePressed: (() ->
     )
 }
 
+@Composable
+fun TopAppBarWithAction(
+    title: String,
+    onBackPressed: (() -> Unit),
+    action: @Composable () -> Unit
+) {
+    TopAppBar(
+        title = { Text(text = title) },
+        navigationIcon = {
+            IconButton(onClick = { onBackPressed() }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back button"
+                )
+            }
+        }, actions = {
+            action()
+        }
+    )
+}
+
 @Preview
 @Composable
 fun HeaderPreview() {

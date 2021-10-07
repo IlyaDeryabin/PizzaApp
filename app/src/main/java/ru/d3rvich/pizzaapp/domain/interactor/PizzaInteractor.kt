@@ -11,7 +11,7 @@ interface PizzaInteractor {
 
     fun getPizzaDetailBy(id: String): Flow<Resource<PizzaDetailEntity>>
 
-    fun getProfile(): Flow<Resource<ProfileEntity?>>
+    fun getProfile(): Flow<Resource<ProfileEntity>>
 
     fun updateProfile(profile: ProfileEntity): Flow<Resource<Unit>>
 }
