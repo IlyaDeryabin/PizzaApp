@@ -107,16 +107,16 @@ fun ProfileEditor(
     topAppBar: @Composable () -> Unit
 ) {
     Scaffold(topBar = { topAppBar() }, modifier = Modifier.fillMaxSize()) {
-        var surname by rememberSaveable() {
+        var surname by rememberSaveable {
             mutableStateOf(profile.surname)
         }
-        var name by rememberSaveable() {
+        var name by rememberSaveable {
             mutableStateOf(profile.name)
         }
-        var phoneNumber by rememberSaveable() {
+        var phoneNumber by rememberSaveable {
             mutableStateOf(profile.phoneNumber)
         }
-        var address by rememberSaveable() {
+        var address by rememberSaveable {
             mutableStateOf(profile.address)
         }
         Column(
