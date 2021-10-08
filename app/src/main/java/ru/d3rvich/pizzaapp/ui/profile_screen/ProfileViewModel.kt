@@ -13,7 +13,7 @@ import ru.d3rvich.pizzaapp.domain.interactor.PizzaInteractor
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(interactor: PizzaInteractor) : ViewModel() {
+class ProfileViewModel @Inject constructor(private val interactor: PizzaInteractor) : ViewModel() {
 
     private val _state = mutableStateOf<ProfileScreenState>(ProfileScreenState.Idle)
     val state: State<ProfileScreenState>
@@ -51,15 +51,30 @@ class ProfileViewModel @Inject constructor(interactor: PizzaInteractor) : ViewMo
         }
     }
 
-    @Throws(Exception::class)
-    fun cancelEditor() {
+    @Throws
+    fun closeEditor() {
         if (profile == null) {
             error("Profile must be initialized")
         }
         _state.value = ProfileScreenState.ProfileData(profile!!)
     }
 
-    fun updateProfile() {
-
+    @Throws
+    fun updateProfile(newProfile: ProfileEntity) {
+        viewModelScope.launch {
+            interactor.updateProfile(profile = newProfile).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        profile = newProfile
+                        _state.value = ProfileScreenState.ProfileData(profile = profile!!)
+                    }
+                    is Resource.Error -> {
+                        error("Ошибка при обновлении профиля.")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
     }
 }
