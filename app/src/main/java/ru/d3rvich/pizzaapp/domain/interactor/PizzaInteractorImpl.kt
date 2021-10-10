@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import ru.d3rvich.pizzaapp.common.Resource
+import ru.d3rvich.pizzaapp.domain.entity.OrderItemEntity
 import ru.d3rvich.pizzaapp.domain.entity.PizzaDetailEntity
 import ru.d3rvich.pizzaapp.domain.entity.PizzaEntity
 import ru.d3rvich.pizzaapp.domain.entity.ProfileEntity
@@ -54,6 +55,22 @@ class PizzaInteractorImpl @Inject constructor(
     override fun updateProfile(profile: ProfileEntity): Flow<Resource<Unit>> = flow {
         emit(Resource.Loading())
         profileService.updateProfile(profile = profile)
+        emit(Resource.Success(Unit))
+    }
+
+    override fun getOrderList(): Flow<Resource<List<OrderItemEntity>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val orderList = repository.getOrderList()
+            emit(Resource.Success(orderList))
+        } catch (e: Exception) {
+            emit(Resource.Error<List<OrderItemEntity>>("Ошибка при получении списка заказов: ${e.localizedMessage}"))
+        }
+    }
+
+    override fun updateOrderList(order: OrderItemEntity): Flow<Resource<Unit>> = flow {
+        emit(Resource.Loading())
+        repository.updateOrderList(order = order)
         emit(Resource.Success(Unit))
     }
 }

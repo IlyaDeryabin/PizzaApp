@@ -20,3 +20,13 @@ data class ProfileEntity(
     val phoneNumber: String,
     val address: String
 )
+
+data class OrderEntity(
+    val pizzaList: List<OrderItemEntity>,
+    val costumer: ProfileEntity
+)
+
+class OrderItemEntity(
+    val pizzaId: String,
+    val count: Int
+)

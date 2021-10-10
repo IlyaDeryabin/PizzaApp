@@ -9,3 +9,9 @@ data class ProfileDto(
     val phoneNumber: String,
     val address: String
 )
+
+@Serializable
+data class OrderItemDto(
+    val pizzaId: String,
+    val count: Int
+)

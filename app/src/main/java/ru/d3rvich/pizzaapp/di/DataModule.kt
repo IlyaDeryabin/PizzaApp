@@ -16,8 +16,8 @@ import ru.d3rvich.pizzaapp.domain.repository.PizzaRepository
 object DataModule {
 
     @Provides
-    fun provideRepository(): PizzaRepository {
-        return PizzaRepositoryImpl()
+    fun provideRepository(@ApplicationContext context: Context): PizzaRepository {
+        return PizzaRepositoryImpl(context = context)
     }
 
     @Provides
