@@ -13,7 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import ru.d3rvich.pizzaapp.R
+import ru.d3rvich.pizzaapp.ui.Screens
 import ru.d3rvich.pizzaapp.ui.common.TopAppBar
 import ru.d3rvich.pizzaapp.ui.model.PizzaUIModel
 import ru.d3rvich.pizzaapp.ui.pizza_list_screen.components.PizzaListItem
@@ -22,7 +24,7 @@ import ru.d3rvich.pizzaapp.ui.theme.PizzaAppTheme
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun PizzaListScreen(viewModel: PizzaListViewModel) {
+fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel) {
     when (val state = viewModel.uiState.value) {
         is PizzaListState.Idle -> {
         }
@@ -30,7 +32,11 @@ fun PizzaListScreen(viewModel: PizzaListViewModel) {
             Loading()
         }
         is PizzaListState.PizzaList -> {
-            Scaffold(topBar = { TopAppBar(title = "PizzaApp", onProfilePressed = {}) }) {
+            Scaffold(topBar = {
+                TopAppBar(
+                    title = "PizzaApp",
+                    onProfilePressed = { navController.navigate(Screens.ProfileScreen.route) })
+            }) {
                 PizzaList(pizzaList = state.pizzaList)
             }
         }

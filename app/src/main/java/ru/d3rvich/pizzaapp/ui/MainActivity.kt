@@ -14,6 +14,8 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.d3rvich.pizzaapp.ui.pizza_list_screen.PizzaListScreen
 import ru.d3rvich.pizzaapp.ui.pizza_list_screen.PizzaListViewModel
+import ru.d3rvich.pizzaapp.ui.profile_screen.ProfileScreen
+import ru.d3rvich.pizzaapp.ui.profile_screen.ProfileViewModel
 import ru.d3rvich.pizzaapp.ui.theme.PizzaAppTheme
 
 @ExperimentalFoundationApi
@@ -33,7 +35,11 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(route = Screens.PizzaListScreen.route) {
                             val viewModel: PizzaListViewModel by viewModels()
-                            PizzaListScreen(viewModel = viewModel)
+                            PizzaListScreen(navController = navController, viewModel = viewModel)
+                        }
+                        composable(route = Screens.ProfileScreen.route) {
+                            val viewModel: ProfileViewModel by viewModels()
+                            ProfileScreen(navController = navController, viewModel)
                         }
                     }
                 }

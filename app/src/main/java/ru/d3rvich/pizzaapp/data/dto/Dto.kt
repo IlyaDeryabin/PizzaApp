@@ -1,5 +1,11 @@
 package ru.d3rvich.pizzaapp.data.dto
 
-/**
- * Здесь будут находиться классы для retrofit
- */
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class ProfileDto(
+    val name: String,
+    val surname: String,
+    val phoneNumber: String,
+    val address: String
+)
