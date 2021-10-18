@@ -4,10 +4,9 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +36,20 @@ fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel)
                     title = "PizzaApp",
                     onProfilePressed = { navController.navigate(Screens.ProfileScreen.route) })
             }) {
-                PizzaList(pizzaList = state.pizzaList)
+                Box(modifier = Modifier.fillMaxSize()) {
+                    PizzaList(pizzaList = state.pizzaList)
+                    FloatingActionButton(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(bottom = 16.dp, end = 16.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ShoppingCart,
+                            contentDescription = "Orders"
+                        )
+                    }
+                }
             }
         }
         is PizzaListState.Error -> {
@@ -91,7 +103,7 @@ fun PizzaListPreview() {
             R.drawable.four_cheeses
         )
     }
-    PizzaAppTheme() {
+    PizzaAppTheme {
         Scaffold(topBar = { TopAppBar(title = "PizzaApp", onProfilePressed = {}) }) {
             PizzaList(pizzaList = pizzaList)
         }

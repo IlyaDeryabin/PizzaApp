@@ -9,3 +9,8 @@ data class PizzaUIModel(
     val weight: String,
     @DrawableRes val photoResourceId: Int
 )
+
+data class OrderItemUIModel(
+    val pizzaUIModel: PizzaUIModel,
+    val count: Int
+)
