@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import ru.d3rvich.pizzaapp.domain.interactor.PizzaInteractor
 import ru.d3rvich.pizzaapp.domain.interactor.PizzaInteractorImpl
+import ru.d3rvich.pizzaapp.domain.profile.ProfileService
 import ru.d3rvich.pizzaapp.domain.repository.PizzaRepository
 
 @Module
@@ -13,7 +14,10 @@ import ru.d3rvich.pizzaapp.domain.repository.PizzaRepository
 object DomainModule {
 
     @Provides
-    fun provideInteractor(repository: PizzaRepository): PizzaInteractor {
-        return PizzaInteractorImpl(repository)
+    fun provideInteractor(
+        repository: PizzaRepository,
+        profileService: ProfileService
+    ): PizzaInteractor {
+        return PizzaInteractorImpl(repository, profileService)
     }
 }

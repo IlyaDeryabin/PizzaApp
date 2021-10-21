@@ -31,8 +31,12 @@ fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel 
             Loading()
         }
         is PizzaListState.PizzaList -> {
-            Scaffold(topBar = { TopAppBar(title = "PizzaApp", onProfilePressed = {}) }) {
-                PizzaList(pizzaList = state.pizzaList, navController)
+            Scaffold(topBar = {
+                TopAppBar(
+                    title = "PizzaApp",
+                    onProfilePressed = { navController.navigate(Screens.ProfileScreen.route) })
+            }) {
+                PizzaList(pizzaList = state.pizzaList)
             }
         }
         is PizzaListState.Error -> {
