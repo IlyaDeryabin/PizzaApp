@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                             PizzaListScreen(navController = navController)
                         }
                         composable(route = Screens.PizzaDetailScreen.route + "/{$PIZZA_ID_KEY}") {
-                            PizzaDetailScreen()
+                            PizzaDetailScreen(navController = navController)
                         }
                     }
                 }
