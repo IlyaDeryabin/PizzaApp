@@ -8,7 +8,7 @@ data class PizzaEntity(
 )
 
 data class PizzaDetailEntity(
-    val id: Long,
+    val id: String,
     val name: String,
     val composition: List<String>,
     val price: String,

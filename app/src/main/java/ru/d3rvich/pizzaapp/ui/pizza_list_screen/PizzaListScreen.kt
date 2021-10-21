@@ -9,7 +9,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ru.d3rvich.pizzaapp.R
 import ru.d3rvich.pizzaapp.ui.Screens
@@ -23,7 +22,7 @@ import ru.d3rvich.pizzaapp.ui.theme.PizzaAppTheme
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel = hiltViewModel()) {
+fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel) {
     when (val state = viewModel.uiState.value) {
         is PizzaListState.Idle -> {
         }

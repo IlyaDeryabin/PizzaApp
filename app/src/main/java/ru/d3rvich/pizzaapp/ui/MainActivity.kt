@@ -3,6 +3,7 @@ package ru.d3rvich.pizzaapp.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -35,14 +36,15 @@ class MainActivity : ComponentActivity() {
                         startDestination = Screens.PizzaListScreen.route
                     ) {
                         composable(route = Screens.PizzaListScreen.route) {
-                            PizzaListScreen(navController = navController)
+                            val viewModel: PizzaListViewModel by viewModels()
+                            PizzaListScreen(navController = navController, viewModel = viewModel)
                         }
                         composable(route = Screens.PizzaDetailScreen.route + "/{$PIZZA_ID_KEY}") {
                             PizzaDetailScreen(navController = navController)
                         }
                         composable(route = Screens.ProfileScreen.route) {
                             val viewModel: ProfileViewModel by viewModels()
-                            ProfileScreen(navController = navController, viewModel)
+                            ProfileScreen(navController = navController, viewModel = viewModel)
                         }
                     }
                 }
