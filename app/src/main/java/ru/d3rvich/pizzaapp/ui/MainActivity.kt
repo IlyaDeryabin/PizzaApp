@@ -39,12 +39,12 @@ class MainActivity : ComponentActivity() {
                             val viewModel: PizzaListViewModel by viewModels()
                             PizzaListScreen(navController = navController, viewModel = viewModel)
                         }
-                        composable(route = Screens.PizzaDetailScreen.route + "/{$PIZZA_ID_KEY}") {
-                            PizzaDetailScreen(navController = navController)
-                        }
                         composable(route = Screens.ProfileScreen.route) {
                             val viewModel: ProfileViewModel by viewModels()
                             ProfileScreen(navController = navController, viewModel = viewModel)
+                        }
+                        composable(route = Screens.PizzaDetailScreen.route + "/{$PIZZA_ID_KEY}") {
+                            PizzaDetailScreen(navController = navController)
                         }
                     }
                 }

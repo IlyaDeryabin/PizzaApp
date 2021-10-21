@@ -3,7 +3,7 @@ package ru.d3rvich.pizzaapp.ui.model
 import androidx.annotation.DrawableRes
 
 data class PizzaUIModel(
-    val id: Long,
+    val id: String,
     val name: String,
     val price: String,
     val weight: String,

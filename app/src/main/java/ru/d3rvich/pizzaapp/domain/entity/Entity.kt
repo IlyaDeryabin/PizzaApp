@@ -1,7 +1,7 @@
 package ru.d3rvich.pizzaapp.domain.entity
 
 data class PizzaEntity(
-    val id: Long,
+    val id: String,
     val name: String,
     val price: String,
     val weight: String,

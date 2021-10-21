@@ -35,7 +35,7 @@ fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel)
                     title = "PizzaApp",
                     onProfilePressed = { navController.navigate(Screens.ProfileScreen.route) })
             }) {
-                PizzaList(pizzaList = state.pizzaList)
+                PizzaList(pizzaList = state.pizzaList, navController = navController)
             }
         }
         is PizzaListState.Error -> {
@@ -54,10 +54,10 @@ fun PizzaList(pizzaList: List<PizzaUIModel>, navController: NavController? = nul
     ) {
         pizzaList.forEach { pizzaUIModel ->
             item {
-                PizzaListItem(pizzaItem = pizzaUIModel) { // onItemClick
+                PizzaListItem(pizzaItem = pizzaUIModel, onItemClick = {
                     navController
                         ?.navigate(Screens.PizzaDetailScreen.route + "/${pizzaUIModel.id}")
-                }
+                })
             }
         }
     }
@@ -70,7 +70,7 @@ fun PizzaList(pizzaList: List<PizzaUIModel>, navController: NavController? = nul
 fun PizzaListPreview() {
     val pizzaList = List(10) {
         PizzaUIModel(
-            0,
+            "0",
             "Четыре сыра",
             "300",
             "100",

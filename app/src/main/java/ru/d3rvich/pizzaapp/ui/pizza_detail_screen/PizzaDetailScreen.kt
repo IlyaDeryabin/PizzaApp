@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ru.d3rvich.pizzaapp.R
+import ru.d3rvich.pizzaapp.ui.Screens
 import ru.d3rvich.pizzaapp.ui.common.Error
 import ru.d3rvich.pizzaapp.ui.common.Loading
 import ru.d3rvich.pizzaapp.ui.common.TopAppBar
@@ -36,7 +37,7 @@ fun PizzaDetailScreen(
             TopAppBar(
                 title = title,
                 onBackPressed = { navController.popBackStack() },
-                onProfilePressed = { /* TODO: 21.10.2021 Add route to profile screen */ })
+                onProfilePressed = { navController.navigate(Screens.ProfileScreen.route) })
         }) {
         when (val state = viewModel.state.value) {
             is PizzaDetailState.Idle -> { // stay empty
@@ -88,7 +89,7 @@ fun PizzaDetail(pizzaDetail: PizzaDetailUIModel) {
                 )
             }
             Text(
-                text = "Ингридиенты",
+                text = "Ингредиенты",
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(vertical = 8.dp)
             )

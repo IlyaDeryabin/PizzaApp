@@ -8,7 +8,7 @@ class PizzaRepositoryImpl : PizzaRepository {
     override suspend fun getPizzaList(): List<PizzaEntity> {
         val pizzaList = List(10) { id ->
             PizzaEntity(
-                id.toLong(),
+                id.toString(),
                 "Четыре сыра",
                 "300",
                 "100"
