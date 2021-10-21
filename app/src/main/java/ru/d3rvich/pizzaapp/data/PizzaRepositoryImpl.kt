@@ -22,14 +22,14 @@ class PizzaRepositoryImpl : PizzaRepository {
             id = id,
             name = "Четыре пиццы",
             price = "300",
-            weight = "100",
+            weight = "610",
             composition = listOf(
                 "Сыр моцарелла",
                 "Соус сливочный",
                 "Сыр Дор Блю",
                 "Сыр Пармезан",
                 "Оливковое масло"
-            ),
+            )
         )
     }
 }
