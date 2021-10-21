@@ -17,5 +17,12 @@ fun PizzaEntity.toPizzaUIModel(): PizzaUIModel {
 }
 
 fun PizzaDetailEntity.toPizzaUIModel(): PizzaDetailUIModel {
-    return PizzaDetailUIModel(id)
+    return PizzaDetailUIModel(
+        id = id,
+        name = name,
+        price = price,
+        weight = weight,
+        composition = composition,
+        photoResourceId = R.drawable.four_cheeses
+    )
 }

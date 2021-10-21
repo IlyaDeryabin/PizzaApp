@@ -10,7 +10,8 @@ class PizzaEntity(
 // TODO: 05.10.2021 Редактируй/добавляй поля, если считаешь это необходимым
 class PizzaDetailEntity(
     val id: String,
-    val description: String,
+    val name: String,
     val composition: List<String>,
-    val price: Int
+    val price: String,
+    val weight: String
 )

@@ -4,7 +4,7 @@ import ru.d3rvich.pizzaapp.domain.entity.PizzaDetailEntity
 import ru.d3rvich.pizzaapp.domain.entity.PizzaEntity
 import ru.d3rvich.pizzaapp.domain.repository.PizzaRepository
 
-class PizzaRepositoryImpl: PizzaRepository {
+class PizzaRepositoryImpl : PizzaRepository {
     override suspend fun getPizzaList(): List<PizzaEntity> {
         val pizzaList = List(10) { id ->
             PizzaEntity(
@@ -20,9 +20,16 @@ class PizzaRepositoryImpl: PizzaRepository {
     override suspend fun getPizzaDetailBy(id: String): PizzaDetailEntity {
         return PizzaDetailEntity(
             id = id,
-            description = "Описание пиццы",
-            composition = listOf("Сыр", "Другой сыр", "Ещё один сыр"),
-            price = 300
+            name = "Четыре пиццы",
+            price = "300",
+            weight = "100",
+            composition = listOf(
+                "Сыр моцарелла",
+                "Соус сливочный",
+                "Сыр Дор Блю",
+                "Сыр Пармезан",
+                "Оливковое масло"
+            ),
         )
     }
 }

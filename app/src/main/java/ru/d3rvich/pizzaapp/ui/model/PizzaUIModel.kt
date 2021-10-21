@@ -10,7 +10,11 @@ data class PizzaUIModel(
     @DrawableRes val photoResourceId: Int
 )
 
-// TODO: 05.10.2021 Добавить все необходимые поля
 data class PizzaDetailUIModel(
-    val id: String
+    val id: String,
+    val name: String,
+    val price: String,
+    val weight: String,
+    val composition: List<String>,
+    @DrawableRes val photoResourceId: Int
 )
