@@ -1,15 +1,10 @@
 package ru.d3rvich.pizzaapp.ui.pizza_detail_screen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,80 +39,69 @@ fun PizzaDetailScreen(viewModel: PizzaDetailViewModel = hiltViewModel()) {
 
 @Composable
 fun PizzaDetail(pizzaDetail: PizzaDetailUIModel) {
-    Column(
+    Surface(
         modifier = Modifier
+            .fillMaxSize()
             .padding(16.dp)
-            .fillMaxHeight()
     ) {
-        val imageModifier = Modifier
-            .height(180.dp)
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(4.dp))
-        Image(
-            painter = painterResource(id = pizzaDetail.photoResourceId),
-            contentDescription = "${pizzaDetail.name} photo",
-            modifier = imageModifier,
-            contentScale = ContentScale.Crop
-        )
-        Spacer(Modifier.height(16.dp))
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column {
+                val imageModifier = Modifier
+                    .height(180.dp)
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(4.dp))
+                Image(
+                    painter = painterResource(id = pizzaDetail.photoResourceId),
+                    contentDescription = "${pizzaDetail.name} photo",
+                    modifier = imageModifier,
+                    contentScale = ContentScale.Crop
+                )
+                Spacer(Modifier.height(16.dp))
 
-        Text(
-            pizzaDetail.name,
-            style = MaterialTheme.typography.h5,
-            modifier = Modifier.padding(bottom = 2.dp)
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                "${pizzaDetail.price} руб.",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(bottom = 7.dp)
-            )
-            Text(
-                "${pizzaDetail.weight} г.",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(bottom = 7.dp)
-            )
+                Text(
+                    pizzaDetail.name,
+                    style = MaterialTheme.typography.h5,
+                    modifier = Modifier.padding(bottom = 2.dp)
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "${pizzaDetail.price} руб.",
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.padding(bottom = 7.dp)
+                    )
+                    Text(
+                        "${pizzaDetail.weight} г.",
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.padding(bottom = 7.dp)
+                    )
 
-        }
-        Text("Ингридиенты", style = MaterialTheme.typography.h6)
-        pizzaDetail.composition.forEach { item ->
-            Text(
-                "- $item",
-                style = MaterialTheme.typography.body1
-            )
-        }
-        Spacer(Modifier.height(400.dp))
-        AddPizza()
-    }
-}
-
-@Composable
-private fun AddPizza() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .padding(horizontal = 85.dp)
-            .clip(shape = CircleShape)
-            .border(
-                BorderStroke(1.dp, Color.Blue)
-            )
-    ) {
-        Button(
-            onClick = { /*TODO*/ },
-            colors = ButtonDefaults.textButtonColors(
-                backgroundColor = Color.Blue,
-                contentColor = Color.White
-            )
-        ) {
-            Text("Добавить в корзину")
+                }
+                Text("Ингридиенты", style = MaterialTheme.typography.h6)
+                pizzaDetail.composition.forEach { item ->
+                    Text(
+                        "- $item",
+                        style = MaterialTheme.typography.body1
+                    )
+                }
+            }
+            Button(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .clip(CircleShape),
+                onClick = { /*TODO*/ },
+                colors = ButtonDefaults.textButtonColors(
+                    backgroundColor = Color.Blue,
+                    contentColor = Color.White
+                )
+            ) {
+                Text("Добавить в корзину")
+            }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
