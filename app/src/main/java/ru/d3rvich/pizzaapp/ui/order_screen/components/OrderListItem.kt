@@ -21,17 +21,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.d3rvich.pizzaapp.R
-import ru.d3rvich.pizzaapp.domain.entity.OrderItemEntity
-import ru.d3rvich.pizzaapp.domain.entity.PizzaEntity
-import ru.d3rvich.pizzaapp.ui.mappers.toPizzaUIModel
+import ru.d3rvich.pizzaapp.ui.model.OrderItemUIModel
 import ru.d3rvich.pizzaapp.ui.model.PizzaUIModel
 
 @Composable
-fun OrderListItem(orderListItem: OrderItemEntity) {
+fun OrderListItem(orderListItem: OrderItemUIModel) {
     var count by rememberSaveable {
         mutableStateOf(orderListItem.count)
     }
-    val pizza: PizzaUIModel = orderListItem.pizza.toPizzaUIModel()
+    val pizza: PizzaUIModel = orderListItem.pizzaUIModel
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -94,13 +92,14 @@ fun Count(
 @Preview(showBackground = true)
 @Composable
 fun OrderItemPreview() {
-    val pizza = PizzaEntity(
-        0,
+    val pizza = PizzaUIModel(
+        "0",
         "Четыре сыра",
         "300",
-        "100"
+        "100",
+        R.drawable.four_cheeses
     )
-    val orderListItem = OrderItemEntity(pizza, 1)
+    val orderListItem = OrderItemUIModel(pizza, 1)
     Surface {
         OrderListItem(orderListItem = orderListItem)
     }
