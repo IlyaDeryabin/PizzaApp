@@ -95,7 +95,7 @@ fun PizzaListItem(pizzaItem: PizzaUIModel, onItemClick: () -> Unit) {
 fun PizzaListItemPreview() {
     PizzaAppTheme {
         val pizzaEntity = PizzaUIModel(
-            0,
+            "0",
             "Четыре сыра",
             "300",
             "100",

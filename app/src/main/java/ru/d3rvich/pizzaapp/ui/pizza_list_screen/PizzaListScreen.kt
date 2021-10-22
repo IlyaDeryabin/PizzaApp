@@ -7,14 +7,16 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.d3rvich.pizzaapp.R
 import ru.d3rvich.pizzaapp.ui.Screens
+import ru.d3rvich.pizzaapp.ui.common.Loading
+import ru.d3rvich.pizzaapp.ui.common.Error
 import ru.d3rvich.pizzaapp.ui.common.TopAppBar
 import ru.d3rvich.pizzaapp.ui.model.PizzaUIModel
 import ru.d3rvich.pizzaapp.ui.pizza_list_screen.components.PizzaListItem
@@ -50,6 +52,7 @@ fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel)
                         )
                     }
                 }
+                PizzaList(pizzaList = state.pizzaList, navController = navController)
             }
         }
         is PizzaListState.Error -> {
@@ -58,34 +61,22 @@ fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel)
     }
 }
 
-@Composable
-fun Loading() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
-    }
-}
-
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun PizzaList(pizzaList: List<PizzaUIModel>) {
+fun PizzaList(pizzaList: List<PizzaUIModel>, navController: NavController? = null) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(count = 2),
         contentPadding = PaddingValues(bottom = 4.dp)
     ) {
         pizzaList.forEach { pizzaUIModel ->
             item {
-                PizzaListItem(pizzaItem = pizzaUIModel) { // onItemClick
-                }
+                PizzaListItem(pizzaItem = pizzaUIModel, onItemClick = {
+                    navController
+                        ?.navigate(Screens.PizzaDetailScreen.route + "/${pizzaUIModel.id}")
+                })
             }
         }
-    }
-}
-
-@Composable
-fun Error(errorText: String) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = errorText)
     }
 }
 
@@ -96,7 +87,7 @@ fun Error(errorText: String) {
 fun PizzaListPreview() {
     val pizzaList = List(10) {
         PizzaUIModel(
-            0,
+            "0",
             "Четыре сыра",
             "300",
             "100",

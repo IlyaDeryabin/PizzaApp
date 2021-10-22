@@ -22,9 +22,9 @@ class PizzaRepositoryImpl @Inject constructor(context: Context) : PizzaRepositor
         context.getSharedPreferences(ORDER_FILE_KEY, Context.MODE_PRIVATE)
 
     override suspend fun getPizzaList(): List<PizzaEntity> {
-        val pizzaList = List(10) {
+        val pizzaList = List(10) { id ->
             PizzaEntity(
-                0,
+                id.toString(),
                 "Четыре сыра",
                 "300",
                 "100"
@@ -34,7 +34,19 @@ class PizzaRepositoryImpl @Inject constructor(context: Context) : PizzaRepositor
     }
 
     override suspend fun getPizzaDetailBy(id: String): PizzaDetailEntity {
-        error("Not yet implemented")
+        return PizzaDetailEntity(
+            id = id,
+            name = "Четыре пиццы",
+            price = "300",
+            weight = "610",
+            composition = listOf(
+                "Сыр моцарелла",
+                "Соус сливочный",
+                "Сыр Дор Блю",
+                "Сыр Пармезан",
+                "Оливковое масло"
+            )
+        )
     }
 
     override suspend fun getOrderList(): List<OrderItemEntity> {

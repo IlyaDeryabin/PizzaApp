@@ -3,7 +3,7 @@ package ru.d3rvich.pizzaapp.ui.model
 import androidx.annotation.DrawableRes
 
 data class PizzaUIModel(
-    val id: Long,
+    val id: String,
     val name: String,
     val price: String,
     val weight: String,
@@ -13,4 +13,13 @@ data class PizzaUIModel(
 data class OrderItemUIModel(
     val pizzaUIModel: PizzaUIModel,
     val count: Int
+)
+
+data class PizzaDetailUIModel(
+    val id: String,
+    val name: String,
+    val price: String,
+    val weight: String,
+    val composition: List<String>,
+    @DrawableRes val photoResourceId: Int
 )
