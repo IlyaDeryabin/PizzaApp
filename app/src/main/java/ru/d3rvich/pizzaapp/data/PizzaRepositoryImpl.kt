@@ -36,7 +36,7 @@ class PizzaRepositoryImpl @Inject constructor(context: Context) : PizzaRepositor
     override suspend fun getPizzaDetailBy(id: String): PizzaDetailEntity {
         return PizzaDetailEntity(
             id = id,
-            name = "Четыре пиццы",
+            name = "Четыре сыра",
             price = "300",
             weight = "610",
             composition = listOf(

@@ -1,17 +1,17 @@
 package ru.d3rvich.pizzaapp.ui.pizza_list_screen
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -24,66 +24,80 @@ import ru.d3rvich.pizzaapp.ui.model.PizzaUIModel
 import ru.d3rvich.pizzaapp.ui.pizza_list_screen.components.PizzaListItem
 import ru.d3rvich.pizzaapp.ui.theme.PizzaAppTheme
 
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
+@ExperimentalAnimationApi
 @Composable
 fun PizzaListScreen(navController: NavController, viewModel: PizzaListViewModel) {
-    when (val state = viewModel.uiState.value) {
-        is PizzaListState.Idle -> {
-        }
-        is PizzaListState.Loading -> {
-            Loading()
-        }
-        is PizzaListState.PizzaList -> {
-            Scaffold(topBar = {
-                TopAppBar(
-                    title = "PizzaApp",
-                    onProfilePressed = { navController.navigate(Screens.ProfileScreen.route) })
-            }) {
+    Scaffold(topBar = {
+        TopAppBar(
+            title = "PizzaApp",
+            onProfilePressed = { navController.navigate(Screens.ProfileScreen.route) })
+    }) {
+        when (val state = viewModel.uiState.value) {
+            is PizzaListState.Idle -> {
+            }
+            is PizzaListState.Loading -> {
+                Loading()
+            }
+            is PizzaListState.PizzaList -> {
+                var orderButtonState by remember {
+                    mutableStateOf(false)
+                }
+                val orderButtonSize = 50.dp
                 Box(modifier = Modifier.fillMaxSize()) {
-                    PizzaList(pizzaList = state.pizzaList)
-                    FloatingActionButton(
-                        onClick = { /*TODO*/ },
+                    Box(
                         modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .padding(bottom = 16.dp, end = 16.dp)
+                            .padding(bottom = if (orderButtonState) orderButtonSize else 0.dp)
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.ShoppingCart,
-                            contentDescription = "Orders"
-                        )
+                        PizzaList(
+                            pizzaList = state.pizzaList,
+                            navController = navController,
+                            addToOrder = { orderButtonState = true })
+                    }
+                    AnimatedVisibility(
+                        visible = orderButtonState,
+                        modifier = Modifier.align(Alignment.BottomCenter)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(orderButtonSize)
+                                .background(Color.Transparent),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Button(
+                                onClick = { navController.navigate(Screens.OrderScreen.route) }
+                            ) {
+                                Text(text = "Перейти в корзину")
+                            }
+                        }
                     }
                 }
-                PizzaList(pizzaList = state.pizzaList, navController = navController)
             }
-        }
-        is PizzaListState.Error -> {
-            Error(errorText = state.message)
+            is PizzaListState.Error -> {
+                Error(errorText = state.message)
+            }
         }
     }
 }
 
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
 @Composable
-fun PizzaList(pizzaList: List<PizzaUIModel>, navController: NavController? = null) {
-    LazyVerticalGrid(
-        cells = GridCells.Fixed(count = 2),
-        contentPadding = PaddingValues(bottom = 4.dp)
-    ) {
+fun PizzaList(
+    pizzaList: List<PizzaUIModel>,
+    navController: NavController? = null,
+    addToOrder: () -> Unit
+) {
+    LazyColumn(contentPadding = PaddingValues(bottom = 4.dp)) {
         pizzaList.forEach { pizzaUIModel ->
             item {
                 PizzaListItem(pizzaItem = pizzaUIModel, onItemClick = {
                     navController
                         ?.navigate(Screens.PizzaDetailScreen.route + "/${pizzaUIModel.id}")
-                })
+                }, addToOrder = addToOrder)
             }
         }
     }
 }
 
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
 @Preview(showBackground = true)
 @Composable
 fun PizzaListPreview() {
@@ -98,7 +112,7 @@ fun PizzaListPreview() {
     }
     PizzaAppTheme {
         Scaffold(topBar = { TopAppBar(title = "PizzaApp", onProfilePressed = {}) }) {
-            PizzaList(pizzaList = pizzaList)
+            PizzaList(pizzaList = pizzaList, addToOrder = {})
         }
     }
 }

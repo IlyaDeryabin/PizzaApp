@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.navigation.compose.NavHost
@@ -22,8 +21,7 @@ import ru.d3rvich.pizzaapp.ui.profile_screen.ProfileScreen
 import ru.d3rvich.pizzaapp.ui.profile_screen.ProfileViewModel
 import ru.d3rvich.pizzaapp.ui.theme.PizzaAppTheme
 
-@ExperimentalFoundationApi
-@ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
