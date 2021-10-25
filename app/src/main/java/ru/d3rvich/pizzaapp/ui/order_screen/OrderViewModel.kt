@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import ru.d3rvich.pizzaapp.common.Resource
 import ru.d3rvich.pizzaapp.domain.entity.OrderItemEntity
 import ru.d3rvich.pizzaapp.domain.interactor.PizzaInteractor
-import ru.d3rvich.pizzaapp.ui.model.PizzaUIModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +21,7 @@ class OrderViewModel @Inject constructor(private val interactor: PizzaInteractor
 
     init {
         viewModelScope.launch {
-            interactor.getOrderList().collect { resource ->
+            interactor.getOrder().collect { resource ->
                 when (resource) {
                     is Resource.Loading -> {
                         _state.value = OrderState.Loading

@@ -49,18 +49,37 @@ class PizzaRepositoryImpl @Inject constructor(context: Context) : PizzaRepositor
         )
     }
 
-    override suspend fun getOrderList(): List<OrderItemEntity> {
+    override suspend fun getOrder(): List<OrderItemEntity> {
         val jsonList = sharedPreferences.getString(ORDER_KEY, null) ?: return emptyList()
         val list: List<OrderItemDto> = Json.decodeFromString(jsonList)
         return list.map(OrderItemDto::toOrderItemEntity)
     }
 
-    override suspend fun updateOrderList(order: OrderItemEntity) {
+    override suspend fun updateOrder(order: OrderItemEntity) {
         val jsonOrders: String = sharedPreferences.getString(ORDER_KEY, null) ?: return
-        val orders: MutableList<OrderItemDto> = Json.decodeFromString(jsonOrders)
-        orders.add(order.toOrderItemDto())
+        val orders: List<OrderItemDto> = Json.decodeFromString(jsonOrders)
+        val ordersMap: MutableMap<String, OrderItemDto> =
+            orders.map { it.pizzaId to it }.toMap() as MutableMap<String, OrderItemDto>
+        when {
+            order.count == 0 -> {
+                ordersMap.remove(order.pizzaId)
+            }
+            order.count > 0 -> {
+                ordersMap[order.pizzaId] = order.toOrderItemDto()
+            }
+            else -> {
+                error("Value count can't be less than zero. Current count is ${order.count}.")
+            }
+        }
         with(sharedPreferences.edit()) {
-            putString(ORDER_KEY, Json.encodeToString(orders))
+            putString(ORDER_KEY, Json.encodeToString(ordersMap.map { it.value }))
+            apply()
+        }
+    }
+
+    override suspend fun cleanOrder() {
+        with(sharedPreferences.edit()) {
+            remove(ORDER_KEY)
             apply()
         }
     }

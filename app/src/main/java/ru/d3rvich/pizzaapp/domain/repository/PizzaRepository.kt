@@ -9,7 +9,9 @@ interface PizzaRepository {
 
     suspend fun getPizzaDetailBy(id: String): PizzaDetailEntity
 
-    suspend fun getOrderList(): List<OrderItemEntity>
+    suspend fun getOrder(): List<OrderItemEntity>
 
-    suspend fun updateOrderList(order: OrderItemEntity)
+    suspend fun updateOrder(order: OrderItemEntity)
+
+    suspend fun cleanOrder()
 }

@@ -16,7 +16,9 @@ interface PizzaInteractor {
 
     fun updateProfile(profile: ProfileEntity): Flow<Resource<Unit>>
 
-    fun getOrderList(): Flow<Resource<List<OrderItemEntity>>>
+    fun getOrder(): Flow<Resource<List<OrderItemEntity>>>
 
-    fun updateOrderList(order: OrderItemEntity): Flow<Resource<Unit>>
+    fun updateOrder(order: OrderItemEntity): Flow<Resource<Unit>>
+
+    fun cleanOrder(): Flow<Resource<Unit>>
 }

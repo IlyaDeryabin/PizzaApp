@@ -58,19 +58,25 @@ class PizzaInteractorImpl @Inject constructor(
         emit(Resource.Success(Unit))
     }
 
-    override fun getOrderList(): Flow<Resource<List<OrderItemEntity>>> = flow {
+    override fun getOrder(): Flow<Resource<List<OrderItemEntity>>> = flow {
         emit(Resource.Loading())
         try {
-            val orderList = repository.getOrderList()
+            val orderList = repository.getOrder()
             emit(Resource.Success(orderList))
         } catch (e: Exception) {
             emit(Resource.Error<List<OrderItemEntity>>("Ошибка при получении списка заказов: ${e.localizedMessage}"))
         }
     }
 
-    override fun updateOrderList(order: OrderItemEntity): Flow<Resource<Unit>> = flow {
+    override fun updateOrder(order: OrderItemEntity): Flow<Resource<Unit>> = flow {
         emit(Resource.Loading())
-        repository.updateOrderList(order = order)
+        repository.updateOrder(order = order)
+        emit(Resource.Success(Unit))
+    }
+
+    override fun cleanOrder(): Flow<Resource<Unit>> = flow {
+        emit(Resource.Loading())
+        repository.cleanOrder()
         emit(Resource.Success(Unit))
     }
 }

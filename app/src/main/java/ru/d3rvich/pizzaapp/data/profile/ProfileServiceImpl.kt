@@ -15,8 +15,7 @@ import javax.inject.Inject
 private const val PROFILE_FILE_KEY = "profile_file_key"
 private const val PROFILE_KEY = "profile_key"
 
-class ProfileServiceImpl @Inject constructor(context: Context) :
-    ProfileService {
+class ProfileServiceImpl @Inject constructor(context: Context) : ProfileService {
 
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(PROFILE_FILE_KEY, Context.MODE_PRIVATE)
