@@ -104,10 +104,10 @@ fun PizzaListPreview() {
     val pizzaList = List(10) {
         PizzaUIModel(
             "0",
-            "Четыре сыра",
+            "Сырная",
             "300",
             "100",
-            R.drawable.four_cheeses
+            R.drawable.cheesses
         )
     }
     PizzaAppTheme {
