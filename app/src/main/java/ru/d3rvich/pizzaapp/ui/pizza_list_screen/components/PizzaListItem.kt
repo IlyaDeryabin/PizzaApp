@@ -1,9 +1,6 @@
 package ru.d3rvich.pizzaapp.ui.pizza_list_screen.components
 
 
-import android.graphics.ColorFilter
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,9 +10,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterEnd
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -207,7 +201,7 @@ fun PizzaListItem(pizzaItem: PizzaUIModel, onItemClick: () -> Unit, addToOrder: 
                     onClick = { addToOrder() },
                     modifier = Modifier
                         .size(40.dp)
-                        .align(CenterHorizontally),
+                        .align(End),
                     shape = CircleShape,
                     border = BorderStroke(1.dp, Color(48, 49, 121)),
                     contentPadding = PaddingValues(0.dp),
