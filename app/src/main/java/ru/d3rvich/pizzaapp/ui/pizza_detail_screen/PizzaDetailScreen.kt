@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -18,16 +19,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ru.d3rvich.pizzaapp.R
 import ru.d3rvich.pizzaapp.ui.Screens
-import ru.d3rvich.pizzaapp.ui.common.Error
-import ru.d3rvich.pizzaapp.ui.common.Loading
 import ru.d3rvich.pizzaapp.ui.common.TopAppBar
 import ru.d3rvich.pizzaapp.ui.model.PizzaDetailUIModel
 
 @Composable
 fun PizzaDetailScreen(
     navController: NavController,
-    viewModel: PizzaDetailViewModel = hiltViewModel()
+    pizzaId: String?,
+    viewModel: PizzaDetailViewModel = hiltViewModel(),
 ) {
+    viewModel.loadData()
     var title by remember {
         mutableStateOf("Pizza Detail")
     }
@@ -39,19 +40,27 @@ fun PizzaDetailScreen(
                 onBackPressed = { navController.popBackStack() },
                 onProfilePressed = { navController.navigate(Screens.ProfileScreen.route) })
         }) {
-        when (val state = viewModel.state.value) {
-            is PizzaDetailState.Idle -> { // stay empty
-            }
-            is PizzaDetailState.Loading -> {
-                Loading()
-            }
-            is PizzaDetailState.PizzaDetail -> {
-                title = state.pizza.name
-                PizzaDetail(pizzaDetail = state.pizza)
-            }
-            is PizzaDetailState.Error -> {
-                Error(errorText = state.message)
-            }
+        viewModel.pizzaDetail.observeAsState().value?.let { pizzaDetail ->
+            title = pizzaDetail.name
+            PizzaDetail(pizzaDetail = pizzaDetail)
+        }
+//        when (val state = viewModel.state.value) {
+//            is PizzaDetailState.Idle -> { // stay empty
+//            }
+//            is PizzaDetailState.Loading -> {
+//                Loading()
+//            }
+//            is PizzaDetailState.PizzaDetail -> {
+//                title = state.pizza.name
+//                PizzaDetail(pizzaDetail = state.pizza)
+//            }
+//            is PizzaDetailState.Error -> {
+//                Error(errorText = state.message)
+//            }
+//        }
+
+        LaunchedEffect(Unit) {
+            viewModel.setPizzaId(pizzaId = pizzaId)
         }
     }
 }

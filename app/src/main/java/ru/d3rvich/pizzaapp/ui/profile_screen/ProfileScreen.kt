@@ -12,12 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ru.d3rvich.pizzaapp.domain.entity.ProfileEntity
 import ru.d3rvich.pizzaapp.ui.common.TopAppBarWithAction
 
 @Composable
-fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
+fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel = hiltViewModel()) {
     when (val state = viewModel.state.value) {
         is ProfileScreenState.Idle -> {
         }
